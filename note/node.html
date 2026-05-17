@@ -1,0 +1,87 @@
+npm init -y
+
+<!-- remove from package.json -->
+ ,
+  "type": "commonjs"
+<!-- add  -->
+   "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  
+<!-- install  -->
+npm i -D typescript
+npx tsc --init
+npm install -D @types/node
+npm i tsx
+npm i -D tsx
+
+<!-- tsconfig.json -->
+"rootDir": "./src",    "src" folder khulo
+"outDir": "./dist",
+
+"module": "esnext",
+"types": ["node"],
+// "jsx": "react-jsx",
+
+
+src
+  => server.ts
+
+<!-- server create and listen -->
+ import {createServer, Server, IncomingMessage} from "http"
+
+const server : Server = createServer((req: IncomingMessage, res)=>{
+    console.log(res);
+})
+
+server.listen(5000,()=>{
+    console.log("server in run for 5000")
+})
+
+
+
+<!-- Route Handling with HTTP Requests & Responses ==========================-->
+
+<!-- 
+
+import console from "console"
+import {createServer, Server, IncomingMessage, ServerResponse} from "http"
+
+const server : Server = createServer((req: IncomingMessage, res: ServerResponse)=>{
+    // console.log(req.url);
+    // console.log(req.method);
+    const url = req.url
+    const method = req.method
+    if (url === '/' && method === "GET") {
+        // res.writeHead(200, {"content-type": "text/plain"})
+        // res.end("this is hone page")
+
+        res.writeHead(200, {"content-type": "application/json"})
+        res.end(JSON.stringify({Message:   "this is hone page"})) 
+    }else if (url?.startsWith("/product")) {
+        res.writeHead(200, {"content-type": "application/json"})
+        res.end(JSON.stringify({Message:   "this is Product page"}))
+    }
+    
+    else{
+        res.writeHead(404, {"content-type": "text/plain"})
+        res.end("Content not found")
+    }
+})
+
+server.listen(5000,()=>{
+    console.log("server in run for 5000")
+})
+
+
+-->
+
+
+
+
+
+
+server.ts
+    route.ts 
+        productController.ts
