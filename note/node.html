@@ -38,7 +38,11 @@ server.ts
 
 
 <!-- Route Handling with HTTP Requests & Responses ==========================server.ts 3- 1/3 -->
+<!-- Route Handling with HTTP Requests & Responses ========================== route.ts 3- 2/3 -->
+<!-- Route Handling with HTTP Requests & Responses ==========================productController.ts 3- 3/3 -->
 
+
+<!-- Route Handling with HTTP Requests & Responses ==========================server.ts 4- 1/4 -->
 import console from "console"
 import {createServer, Server, IncomingMessage, ServerResponse} from "http"
 import { routeHandler } from "./routes/route"
@@ -51,8 +55,7 @@ const server : Server = createServer((req: IncomingMessage, res: ServerResponse)
 server.listen(5000,()=>{
     console.log("server in run for 5000")
 })
-
-<!-- Route Handling with HTTP Requests & Responses ========================== route.ts 3- 2/3 -->
+<!-- Route Handling with HTTP Requests & Responses ========================== route.ts 4- 2/4 -->
 import type { IncomingMessage, ServerResponse } from "http";
 import { productController } from "../controller/product.controller";
 
@@ -79,12 +82,13 @@ export const routeHandler = (req: IncomingMessage, res: ServerResponse) => {
 };
 
 
-<!-- Route Handling with HTTP Requests & Responses ==========================productController.ts 3- 3/3 -->
+<!-- Route Handling with HTTP Requests & Responses ==========================productController.ts 4- 3/4 -->
 
 import type { IncomingMessage, ServerResponse } from "http";
+import { readProduct } from "../service/product.service";
 
 export const productController = (req: IncomingMessage, res: ServerResponse) => {
-
+    const product = readProduct()
     const url = req.url
     const method = req.method
     if (url === '/product' && method === "GET"){
@@ -97,6 +101,30 @@ export const productController = (req: IncomingMessage, res: ServerResponse) => 
         ]
         res.writeHead(200, {"content-type": "application/json"})
         res.end(JSON.stringify({Message:   "this is Product page", data : product}))
+      
     }
     
+};
+
+
+<!-- Route Handling with HTTP Requests & Responses ==========================service/productService.ts 4- 4/4 -->
+
+import fs from "fs";
+import path from "path";
+
+const filePath = path.join(process.cwd(), "./src/database/db.json");
+
+export const readProduct = () => {
+  //   console.log(process.cwd());
+  //   console.log(filePath);
+  const products = fs.readFileSync(filePath, "utf-8");
+  //   console.log(products.toString());
+  //   console.log(products);
+  //   console.log(JSON.parse(products));
+  return JSON.parse(products);
+};
+
+export const insertProduct = (payload: any) => {
+  console.log(JSON.stringify(payload));
+  fs.writeFileSync(filePath, JSON.stringify(payload));
 };
