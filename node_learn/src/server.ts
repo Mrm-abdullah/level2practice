@@ -8,6 +8,6 @@ const server : Server = createServer((req: IncomingMessage, res: ServerResponse)
     
 })
 
-server.listen(5000,()=>{
-    console.log("server in run for 5000")
+server.listen(500,()=>{
+    console.log("server in run for 500")
 })
