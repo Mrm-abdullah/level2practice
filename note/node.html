@@ -28,20 +28,9 @@ npm i -D tsx
 src
   => server.ts
 
-<!-- server create and listen -->
- import {createServer, Server, IncomingMessage} from "http"
+<!-- server create and listen =========================== 1 -->
 
-const server : Server = createServer((req: IncomingMessage, res)=>{
-    console.log(res);
-})
-
-server.listen(5000,()=>{
-    console.log("server in run for 5000")
-})
-
-
-
-<!-- Route Handling with HTTP Requests & Responses ==========================-->
+<!-- Route Handling with HTTP Requests & Responses ========================== 2-->
 
 <!-- 
 
