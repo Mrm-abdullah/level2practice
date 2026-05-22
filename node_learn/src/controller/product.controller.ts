@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from "http";
 import { insertProduct, readProduct } from "../service/product.service";
 import type { IProduct } from "../types/product.type";
 import { parseBody } from "../utility/parseBody";
+import { sendResponse } from "../utility/sendResponse";
 
 export const productController = async(req: IncomingMessage, res: ServerResponse) => {
     const products = readProduct()
@@ -14,18 +15,25 @@ export const productController = async(req: IncomingMessage, res: ServerResponse
     // console.log(id)
 
     if (url === '/products' && method === "GET"){
-        res.writeHead(200, {"content-type": "application/json"})
-        res.end(JSON.stringify({Message:   "this is Products page", data : products}))
-        
-    
-    }
-    else if (method === "GET" && id !== null)  {
-      const products = readProduct();
-      const product = products.find((p: IProduct) => p.id === id);
-      res.end(JSON.stringify({Message:  "this is Product page", data : product}))
-    
+        try {
+            const products = readProduct();
+            return sendResponse(res, 200, true, "Products get successfully", products);
+        } catch (error) {
+            return sendResponse(res, 500, false, "Something went wrong!", error);
+        }        
+    }else if (method === "GET" && id !== null)  {
+        try {
+            const products = readProduct(); // [{}]
+            const product = products.find((p: IProduct) => p.id === id); // id === id
+            if (!product) {
+                return sendResponse(res, 404, false, "Product not found!");
+            }
+            return sendResponse( res, 200, true, "Product get successfully", products);
+        } catch (error) {
+            return sendResponse(res, 500, false, "Something went wrong!", error);
+        }    
     }else if (method === "POST" && url === "/products") {
-    // Created Product by Post Method
+        
     const body = await parseBody(req);
     // console.log("Body", body);
     const products = readProduct(); // [{},{},{}]
