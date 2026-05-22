@@ -15,6 +15,7 @@ npx tsc --init
 npm install -D @types/node
 npm i tsx
 npm i -D tsx
+npm i dotenv
 
 <!-- tsconfig.json -->
 "rootDir": "./src",    "src" folder khulo
@@ -27,6 +28,9 @@ npm i -D tsx
 
 src
   => server.ts
+  => .env
+  => config
+    =>index.ts
 
 <!-- server create and listen =========================== 1 -->
 
@@ -128,3 +132,6 @@ export const insertProduct = (payload: any) => {
   console.log(JSON.stringify(payload));
   fs.writeFileSync(filePath, JSON.stringify(payload));
 };
+
+
+

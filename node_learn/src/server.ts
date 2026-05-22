@@ -1,13 +1,11 @@
-
-import console from "console"
 import {createServer, Server, IncomingMessage, ServerResponse} from "http"
 import { routeHandler } from "./routes/route"
+import config from "./config";
 
 const server : Server = createServer((req: IncomingMessage, res: ServerResponse)=>{
     routeHandler(req, res);   
     
 })
-
-server.listen(500,()=>{
-    console.log("server in run for 500")
-})
+server.listen(config.port, () => {
+  console.log(`The server is running on the port ${config.port}`);
+});
