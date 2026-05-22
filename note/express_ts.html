@@ -1,0 +1,50 @@
+npm init -y
+npm i -D typescript
+npx tsc --init
+npm i express
+npm i --save-dev @types/express
+npm i -D tsx
+
+<!-- npm install -D @types/node
+npm i -D tsx
+npm i dotenv -->
+
+
+<!-- package.json -->
+ ,
+  "type": "module"
+<!-- add  -->
+   "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+  },
+
+
+
+<!-- tsconfig.json -->
+"rootDir": "./src",    "src" folder khulo
+"outDir": "./dist",
+
+"module": "esnext",
+"types": ["node"],
+// "jsx": "react-jsx",
+
+
+
+src
+  => server.ts
+
+
+
+<!-- server.ts  https://expressjs.com/en/ -->
+import express from "express"
+const app = express()
+const port = 5000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
