@@ -1,17 +1,16 @@
 import express, { type Application, type Request, type Response } from "express"
 import { Pool } from "pg";
-// import config from "./config";
+import config from "./config";
 
-const port = 5000
 const app: Application = express();
-// const port = config.port;
+const port = config.port;
 
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
 const pool = new Pool({
-  connectionString: "postgres://485f8dff48c67abac9a1c42e0ba4e39d861bad8e4a21daa1ae3977fbaa3449fc:sk_dDL7nlZLgzI9mqPf6bf5s@pooled.db.prisma.io:5432/postgres?sslmode=require",
+  connectionString: config.connection_string
 });
 
 const initDB = async () => {
