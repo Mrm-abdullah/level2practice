@@ -1,12 +1,10 @@
-// import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { pool } from "../../db";
 import type { IUser } from "./user.interface";
-
 const createUserIntoDB = async (payload: IUser) => {
   const { name, email, password, age } = payload;
 
-//   const hashPassword = await bcrypt.hash(password, 10);
-  const hashPassword = password;
+  const hashPassword = await bcrypt.hash(password, 10);
 
   const result = await pool.query(
     `
@@ -19,7 +17,6 @@ const createUserIntoDB = async (payload: IUser) => {
 
   return result;
 };
-
 const getAllUsersFromDB = async () => {
   const result = await pool.query(`
       SELECT * FROM users  
