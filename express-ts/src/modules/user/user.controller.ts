@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import sendResponse from "../../utility/sendResponse";
 import { userService } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
@@ -9,13 +10,15 @@ const createUser = async (req: Request, res: Response) => {
     const result = await userService.createUserIntoDB(req.body);
     // console.log(result);
 
-    res.status(201).json({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
       message: "User Created successfully!",
       data: result.rows[0],
     });
   } catch (error: any) {
-    res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message,
       error: error,
@@ -24,11 +27,12 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (req: Request, res: Response) => {
+  console.log("COntroller", req.user);
   try {
     const result = await userService.getAllUsersFromDB();
     res.status(200).json({
       success: true,
-      message: "Users getting successfully!",
+      message: "Users retrived successfully!",
       data: result.rows,
     });
   } catch (error: any) {
